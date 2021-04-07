@@ -1,5 +1,4 @@
 import tkinter as tk
-import time
 
 root = tk.Tk()
 root.geometry("600x400") #size of window
@@ -32,7 +31,7 @@ class Blok:
             self.canvas = tk.Canvas(root,width=self.w,height=self.h,bd=1, cursor="fleur")
             self.canvas.pack()
 
-            shape = self.canvas.create_rectangle(self.x, self.y, self.x+self.w, self.y+self.h, fill='lightblue')
+            self.canvas.create_rectangle(self.x, self.y, self.x+self.w, self.y+self.h, fill='lightblue')
             label = self.canvas.create_text((10, self.h/2), text="Box text", anchor=tk.W)
             
             entry1 = tk.Entry(self.canvas) 
