@@ -1,6 +1,13 @@
 import tkinter as tk
 import Block_module as block
 
+blocks = []
+
+snap_x = 100
+snap_y = 100
+
+
+
 def make_draggable(widget):
     snapped = None
     widget.bind("<Button-1>", on_drag_start)
@@ -36,6 +43,40 @@ def on_drag_motion(event):
         widget.place(x=snap_x, y=snap_y)
         snapped = True
 
+def add_print(event):
+    x,y = event.widget.winfo_x(), event.widget.winfo_y()
+    blocks.append(block.Print(root,(x + 10,y + 10)))
+    make_draggable(blocks[-1].canvas)
+    blocks[-1].canvas.bind("<Button-3>",delete_block)
+
+def add_forloop(event):
+    x,y = event.widget.winfo_x(), event.widget.winfo_y()
+    blocks.append(block.Forloop(root,(x + 10,y + 10)))
+    make_draggable(blocks[-1].canvas)
+    blocks[-1].canvas.bind("<Button-3>",delete_block)
+
+def add_lavvar(event):
+    x,y = event.widget.winfo_x(), event.widget.winfo_y()
+    blocks.append(block.Lav_var(root,(x + 10,y + 10)))
+    make_draggable(blocks[-1].canvas)
+    blocks[-1].canvas.bind("<Button-3>",delete_block)
+
+def add_sætvar(event):
+    x,y = event.widget.winfo_x(), event.widget.winfo_y()
+    blocks.append(block.Sæt_var(root,(x + 10,y + 10)))
+    make_draggable(blocks[-1].canvas)
+    blocks[-1].canvas.bind("<Button-3>",delete_block)
+
+def delete_block(event):
+    for block in blocks:
+        if block.canvas == event.widget:
+            block.canvas.destroy()
+            blocks.remove(block)
+
+
+
+
+
 root = tk.Tk()
 root.geometry("600x400")
 
@@ -48,8 +89,19 @@ sidebar.pack(fill='both', side='left')
 scroll_frame = tk.Frame(sidebar, height = 2000, width = 175)
 scroll_y = tk.Scrollbar(root, command = sidebar.yview)
 
+print_block = block.Print(scroll_frame,(8,0))
+print_block.canvas.bind("<Button-1>", add_print)
 
+forloop_block = block.Forloop(scroll_frame,(8,50))
+forloop_block.canvas.bind("<Button-1>", add_forloop)
 
+lavvar_block = block.Lav_var(scroll_frame,(8,100))
+lavvar_block.canvas.bind("<Button-1>", add_lavvar)
+
+sætvar_block = block.Sæt_var(scroll_frame,(8,150))
+sætvar_block.canvas.bind("<Button-1>", add_sætvar)
+
+start_block = block.Start(root)
 
 
 sidebar.create_window(0,0, window = scroll_frame, anchor = "nw")
