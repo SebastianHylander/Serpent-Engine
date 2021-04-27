@@ -13,10 +13,13 @@ class Start:
         self.w = 150
         self.h = 30
         self.root = root
-        self.canvas = tk.Canvas(self.root,width=self.w,height=self.h,bd=0, bg="lime")
+
+
+        self.canvas = tk.Canvas(self.root,width=self.w,height=self.h,bd=0, cursor="fleur", bg="green")
         self.canvas.place(x=self.x, y=self.y)
 
-        self.canvas.create_text((self.w/2, self.h/2), text="START", anchor=tk.CENTER)
+        self.canvas.create_text((self.w/2, self.h/2), text="Skriv", anchor=tk.CENTER)
+
 
 
 class Print:
