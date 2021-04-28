@@ -6,7 +6,7 @@ blocks = []
 program_blocks = []
 
 snap_x = 312
-snap_y = 20 + 35
+snap_y = 35 + 35
 
 
 
@@ -27,7 +27,7 @@ def on_drag_start(event):
     widget = event.widget
     widget._drag_start_x = event.x
     widget._drag_start_y = event.y
-    snap_y = 20 + 35 + len(program_blocks)*35
+    snap_y = 35 + 35 + len(program_blocks)*35
     if len(program_blocks) > 1:
         if program_blocks[-1] == widget:
             program_blocks.remove(widget)
@@ -138,7 +138,20 @@ sidebar.configure(scrollregion=sidebar.bbox('all'),yscrollcommand = scroll_y.set
 scroll_y.pack(side=tk.LEFT, fill = tk.Y)
 
 def run():
-    print_block.entry1.get()
+    newfile = "{}.py".format(filename.get())
+    with open(newfile,'w') as f:
+        for codeblock in program_blocks:
+            for block in blocks:
+                if  block.canvas == codeblock:
+                    f.write(block.translate())
+                    f.write('\n')
+
+filenamecanvas = tk.Canvas(root, width = 150, height = 10)
+filenamecanvas.place(x =314, y = 20)
+
+filename = tk.Entry(root) 
+filenamecanvas.create_window(0,0, width=150, window=filename, anchor=tk.W)
+filename.insert(0, "filename")
 
 button = tk.Button(root,text="MAKE PROGRAM",command=run, bg="lime")
 button.place(x=480,y=10)

@@ -6,7 +6,7 @@ import tkinter as tk
 class Start:
     def __init__(self,root):
         self.x = 312
-        self.y = 20
+        self.y = 35
         self.w = 150
         self.h = 30
         self.root = root
@@ -31,6 +31,17 @@ class Print:
 
         self.entry1 = tk.Entry(self.canvas) 
         entry = self.canvas.create_window(40, self.h/2, width=105, window=self.entry1, anchor=tk.W)
+    
+    def translate(self):
+        entry = self.entry1.get()
+
+        if '{' in entry and '}' in entry:
+
+            code = 'print(f"{}")'.format(entry)
+        else:
+            code = 'print("{}")'.format(entry)
+
+        return code
 
 class Forloop:
 
@@ -78,6 +89,12 @@ class Lav_var:
         self.entry1 = tk.Entry(self.canvas) 
         entry = self.canvas.create_window(105, self.h/2, width=40, window=self.entry1, anchor=tk.W)
 
+    def translate(self):
+        
+        code = '{} = None'.format(self.entry1.get())
+        return code
+
+
 class Sæt_var:
 
     def __init__(self,root,startpos):
@@ -98,6 +115,12 @@ class Sæt_var:
 
         self.entry2 = tk.Entry(self.canvas) 
         entry = self.canvas.create_window(95, self.h/2, width=40, window=self.entry2, anchor=tk.W)
+
+    def translate(self):
+        code = '{} = {}'.format(self.entry1.get(),self.entry2.get())
+        return code
+
+
 
 #def run():
 #    print(a.entry1.get())
