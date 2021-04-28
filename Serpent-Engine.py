@@ -3,8 +3,10 @@ import Block_module as block
 
 blocks = []
 
-snap_x = 100
-snap_y = 100
+program_blocks = []
+
+snap_x = 312
+snap_y = 20 + 35
 
 
 
@@ -18,18 +20,28 @@ def undraggable(widget):
     widget.unbind("<Button-1>")
     widget.unbind("<B1-Motion>")
     widget.unbind("<ButtonRelease-1>")
+    widget.unbind("Button-3")
 
 def on_drag_start(event):
+    global snap_y
     widget = event.widget
     widget._drag_start_x = event.x
     widget._drag_start_y = event.y
+    snap_y = 20 + 35 + len(program_blocks)*35
+    if program_blocks[-1] == widget:
+        program_blocks.remove(widget)
+        make_draggable(program_blocks[-1])
+        program_blocks[-1].bind("<Button-3>",delete_block)
+    
 
 def on_drag_stop(event):
-    global snap_y
     widget = event.widget
-    y = widget.winfo_y()
     if snapped == True:
-        snap_y = y + 35
+        program_blocks.append(widget)
+        print(program_blocks)
+        if len(program_blocks) > 1:
+            undraggable(program_blocks[-2])
+        
 
 def on_drag_motion(event):
     global snapped
@@ -72,10 +84,14 @@ def add_sætvar(event):
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
 def delete_block(event):
+    widget = event.widget
     for block in blocks:
-        if block.canvas == event.widget:
+        if block.canvas == widget:
             block.canvas.destroy()
             blocks.remove(block)
+            if program_blocks[-1] == widget:
+                program_blocks.remove(widget)
+
 
 
 
