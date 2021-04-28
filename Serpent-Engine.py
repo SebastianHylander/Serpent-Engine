@@ -44,26 +44,30 @@ def on_drag_motion(event):
         snapped = True
 
 def add_print(event):
-    x,y = event.widget.winfo_x(), event.widget.winfo_y()
-    blocks.append(block.Print(root,(x + 10,y + 10)))
+    x = event.widget.canvasx(event.x)
+    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
+    blocks.append(block.Print(root,(x, y)))
     make_draggable(blocks[-1].canvas)
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
 def add_forloop(event):
-    x,y = event.widget.winfo_x(), event.widget.winfo_y()
-    blocks.append(block.Forloop(root,(x + 10,y + 10)))
+    x = event.widget.canvasx(event.x)
+    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
+    blocks.append(block.Forloop(root,(x, y)))
     make_draggable(blocks[-1].canvas)
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
 def add_lavvar(event):
-    x,y = event.widget.winfo_x(), event.widget.winfo_y()
-    blocks.append(block.Lav_var(root,(x + 10,y + 10)))
+    x = event.widget.canvasx(event.x)
+    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
+    blocks.append(block.Lav_var(root,(x, y)))
     make_draggable(blocks[-1].canvas)
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
 def add_sætvar(event):
-    x,y = event.widget.winfo_x(), event.widget.winfo_y()
-    blocks.append(block.Sæt_var(root,(x + 10,y + 10)))
+    x = event.widget.canvasx(event.x)
+    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
+    blocks.append(block.Sæt_var(root,(x, y)))
     make_draggable(blocks[-1].canvas)
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
