@@ -3,9 +3,6 @@ import tkinter as tk
 #root = tk.Tk()
 #root.geometry("600x400")
 
-#snap_x = 100
-#snap_y = 100
-
 class Start:
     def __init__(self,root):
         self.x = 312
@@ -14,13 +11,10 @@ class Start:
         self.h = 30
         self.root = root
 
-
-        self.canvas = tk.Canvas(self.root,width=self.w,height=self.h,bd=0, cursor="fleur", bg="green")
+        self.canvas = tk.Canvas(self.root,width=self.w,height=self.h,bd=0, cursor="fleur", bg="grey")
         self.canvas.place(x=self.x, y=self.y)
 
         self.canvas.create_text((self.w/2, self.h/2), text="START", anchor=tk.CENTER)
-
-
 
 class Print:
 
@@ -54,6 +48,19 @@ class Forloop:
 
         self.entry1 = tk.Entry(self.canvas) 
         entry = self.canvas.create_window(50, self.h/2, width=25, window=self.entry1, anchor=tk.W)
+
+class Forloopslut:
+
+    def __init__(self,root,startpos):
+        self.x = startpos[0]
+        self.y = startpos[1]
+        self.w = 150
+        self.h = 30
+        self.root = root
+        self.canvas = tk.Canvas(self.root,width=self.w,height=self.h,bd=0, cursor="fleur", bg="cyan")
+        self.canvas.place(x=self.x, y=self.y)
+
+        self.canvas.create_text((10, self.h/2), text="Stop gentag", anchor=tk.W)
 
 class Lav_var:
 

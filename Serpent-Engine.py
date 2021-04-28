@@ -28,12 +28,12 @@ def on_drag_start(event):
     widget._drag_start_x = event.x
     widget._drag_start_y = event.y
     snap_y = 20 + 35 + len(program_blocks)*35
-    if program_blocks[-1] == widget:
-        program_blocks.remove(widget)
-        make_draggable(program_blocks[-1])
-        program_blocks[-1].bind("<Button-3>",delete_block)
+    if len(program_blocks) > 1:
+        if program_blocks[-1] == widget:
+            program_blocks.remove(widget)
+            make_draggable(program_blocks[-1])
+            program_blocks[-1].bind("<Button-3>",delete_block)
     
-
 def on_drag_stop(event):
     widget = event.widget
     if snapped == True:
@@ -69,6 +69,13 @@ def add_forloop(event):
     make_draggable(blocks[-1].canvas)
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
+def add_forloopslut(event):
+    x = event.widget.canvasx(event.x)
+    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
+    blocks.append(block.Forloopslut(root,(x, y)))
+    make_draggable(blocks[-1].canvas)
+    blocks[-1].canvas.bind("<Button-3>",delete_block)
+
 def add_lavvar(event):
     x = event.widget.canvasx(event.x)
     y = event.y_root - root.winfo_y() - event.widget.winfo_height()
@@ -94,9 +101,6 @@ def delete_block(event):
 
 
 
-
-
-
 root = tk.Tk()
 root.geometry("600x400")
 
@@ -118,20 +122,25 @@ print_block.canvas.bind("<Button-1>", add_print)
 forloop_block = block.Forloop(scroll_frame,(8,50))
 forloop_block.canvas.bind("<Button-1>", add_forloop)
 
-lavvar_block = block.Lav_var(scroll_frame,(8,100))
+forloopslut_block = block.Forloopslut(scroll_frame,(8,100))
+forloopslut_block.canvas.bind("<Button-1>", add_forloopslut)
+
+lavvar_block = block.Lav_var(scroll_frame,(8,150))
 lavvar_block.canvas.bind("<Button-1>", add_lavvar)
 
-sætvar_block = block.Sæt_var(scroll_frame,(8,150))
+sætvar_block = block.Sæt_var(scroll_frame,(8,200))
 sætvar_block.canvas.bind("<Button-1>", add_sætvar)
 
 start_block = block.Start(root)
 
-
-
-
 sidebar.configure(scrollregion=sidebar.bbox('all'),yscrollcommand = scroll_y.set)
 
-
 scroll_y.pack(side=tk.LEFT, fill = tk.Y)
+
+def run():
+    print_block.entry1.get()
+
+button = tk.Button(root,text="MAKE PROGRAM",command=run, bg="lime")
+button.place(x=480,y=10)
 
 root.mainloop()
