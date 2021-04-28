@@ -89,6 +89,9 @@ sidebar.pack(fill='both', side='left')
 scroll_frame = tk.Frame(sidebar, height = 2000, width = 175)
 scroll_y = tk.Scrollbar(root, command = sidebar.yview)
 
+sidebar.create_window(0,0, window = scroll_frame, anchor = "nw")
+sidebar.update_idletasks()
+
 print_block = block.Print(scroll_frame,(8,0))
 print_block.canvas.bind("<Button-1>", add_print)
 
@@ -104,8 +107,7 @@ sætvar_block.canvas.bind("<Button-1>", add_sætvar)
 start_block = block.Start(root)
 
 
-sidebar.create_window(0,0, window = scroll_frame, anchor = "nw")
-sidebar.update_idletasks()
+
 
 sidebar.configure(scrollregion=sidebar.bbox('all'),yscrollcommand = scroll_y.set)
 
