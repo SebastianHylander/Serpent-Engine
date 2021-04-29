@@ -27,18 +27,17 @@ def on_drag_start(event):
     widget = event.widget
     widget._drag_start_x = event.x
     widget._drag_start_y = event.y
-    snap_y = 35 + 35 + len(program_blocks)*35
     if len(program_blocks) > 1:
         if program_blocks[-1] == widget:
             program_blocks.remove(widget)
             make_draggable(program_blocks[-1])
             program_blocks[-1].bind("<Button-3>",delete_block)
+    snap_y = 35 + 35 + len(program_blocks)*35
     
 def on_drag_stop(event):
     widget = event.widget
     if snapped == True:
         program_blocks.append(widget)
-        print(program_blocks)
         if len(program_blocks) > 1:
             undraggable(program_blocks[-2])
         
