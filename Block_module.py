@@ -41,7 +41,7 @@ class Print:
         else:
             code = 'print("{}")'.format(entry)
 
-        return code
+        return code,0
 
 class Forloop:
 
@@ -60,6 +60,10 @@ class Forloop:
         self.entry1 = tk.Entry(self.canvas) 
         entry = self.canvas.create_window(50, self.h/2, width=25, window=self.entry1, anchor=tk.W)
 
+    def translate(self):
+        code = "for i in range({}):".format(self.entry1.get())
+        return code,1
+
 class Forloopslut:
 
     def __init__(self,root,startpos):
@@ -72,6 +76,10 @@ class Forloopslut:
         self.canvas.place(x=self.x, y=self.y)
 
         self.canvas.create_text((10, self.h/2), text="Stop gentag", anchor=tk.W)
+
+    def translate(self):
+
+        return "#Gentag slut",-1
 
 class Lav_var:
 
@@ -92,7 +100,7 @@ class Lav_var:
     def translate(self):
         
         code = '{} = None'.format(self.entry1.get())
-        return code
+        return code,0
 
 
 class Sæt_var:
@@ -118,7 +126,7 @@ class Sæt_var:
 
     def translate(self):
         code = '{} = {}'.format(self.entry1.get(),self.entry2.get())
-        return code
+        return code,0
 
 
 

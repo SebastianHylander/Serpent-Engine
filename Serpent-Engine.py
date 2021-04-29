@@ -138,12 +138,15 @@ scroll_y.pack(side=tk.LEFT, fill = tk.Y)
 
 def run():
     newfile = "{}.py".format(filename.get())
+    tab = 0
     with open(newfile,'w') as f:
         for codeblock in program_blocks:
             for block in blocks:
                 if  block.canvas == codeblock:
-                    f.write(block.translate())
+                    code,inc = block.translate()
+                    f.write(tab * "    " + code)
                     f.write('\n')
+                    tab = tab + inc
 
 filenamecanvas = tk.Canvas(root, width = 150, height = 10)
 filenamecanvas.place(x =314, y = 20)
