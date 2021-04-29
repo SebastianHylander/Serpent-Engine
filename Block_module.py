@@ -1,8 +1,5 @@
 import tkinter as tk
 
-#root = tk.Tk()
-#root.geometry("600x400")
-
 class Start:
     def __init__(self,root):
         self.x = 312
@@ -127,22 +124,3 @@ class Sæt_var:
     def translate(self):
         code = '{} = {}'.format(self.entry1.get(),self.entry2.get())
         return code,0
-
-
-
-#def run():
-#    print(a.entry1.get())
-
-#button = tk.Button(root,text="fun :)",command=run)
-#button.pack()
-
-
-#a = Forloop((0,0))
-#b = Print((0,0))
-#c = Lav_var((0,0))
-#d = Start()
-#e = Sæt_var((0,0))
-#make_draggable(a.canvas)
-#make_draggable(b.canvas)
-#make_draggable(c.canvas)
-#root.mainloop()

@@ -1,14 +1,14 @@
 import tkinter as tk
 import Block_module as block
 
+Block_class = ["Print", "Forloop", "Forloopslut", "Lav_var", "Sæt_var"]
+
 blocks = []
 
 program_blocks = []
 
 snap_x = 312
 snap_y = 35 + 35
-
-
 
 def make_draggable(widget):
     snapped = None
@@ -33,9 +33,7 @@ def on_drag_start(event):
             if len(program_blocks) > 0:
                 make_draggable(program_blocks[-1])
                 program_blocks[-1].bind("<Button-3>",delete_block)
-    print(len(program_blocks))
     snap_y = 35 + 35 + len(program_blocks)*35
-    
     
 def on_drag_stop(event):
     widget = event.widget
@@ -44,7 +42,6 @@ def on_drag_stop(event):
         if len(program_blocks) > 1:
             undraggable(program_blocks[-2])
         
-
 def on_drag_motion(event):
     global snapped
     widget = event.widget
@@ -57,38 +54,10 @@ def on_drag_motion(event):
         widget.place(x=snap_x, y=snap_y)
         snapped = True
 
-def add_print(event):
+def add_block(event, blocktype):
     x = event.widget.canvasx(event.x)
     y = event.y_root - root.winfo_y() - event.widget.winfo_height()
-    blocks.append(block.Print(root,(x, y)))
-    make_draggable(blocks[-1].canvas)
-    blocks[-1].canvas.bind("<Button-3>",delete_block)
-
-def add_forloop(event):
-    x = event.widget.canvasx(event.x)
-    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
-    blocks.append(block.Forloop(root,(x, y)))
-    make_draggable(blocks[-1].canvas)
-    blocks[-1].canvas.bind("<Button-3>",delete_block)
-
-def add_forloopslut(event):
-    x = event.widget.canvasx(event.x)
-    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
-    blocks.append(block.Forloopslut(root,(x, y)))
-    make_draggable(blocks[-1].canvas)
-    blocks[-1].canvas.bind("<Button-3>",delete_block)
-
-def add_lavvar(event):
-    x = event.widget.canvasx(event.x)
-    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
-    blocks.append(block.Lav_var(root,(x, y)))
-    make_draggable(blocks[-1].canvas)
-    blocks[-1].canvas.bind("<Button-3>",delete_block)
-
-def add_sætvar(event):
-    x = event.widget.canvasx(event.x)
-    y = event.y_root - root.winfo_y() - event.widget.winfo_height()
-    blocks.append(block.Sæt_var(root,(x, y)))
+    eval("blocks.append(block.{}(root,(x, y)))".format(blocktype))
     make_draggable(blocks[-1].canvas)
     blocks[-1].canvas.bind("<Button-3>",delete_block)
 
@@ -98,10 +67,9 @@ def delete_block(event):
         if block.canvas == widget:
             block.canvas.destroy()
             blocks.remove(block)
-            if program_blocks[-1] == widget:
-                program_blocks.remove(widget)
-
-
+            if len(program_blocks) > 0:
+                if program_blocks[-1] == widget:
+                    program_blocks.remove(widget)
 
 root = tk.Tk()
 root.geometry("600x400")
@@ -118,20 +86,16 @@ scroll_y = tk.Scrollbar(root, command = sidebar.yview)
 sidebar.create_window(0,0, window = scroll_frame, anchor = "nw")
 sidebar.update_idletasks()
 
-print_block = block.Print(scroll_frame,(8,0))
-print_block.canvas.bind("<Button-1>", add_print)
+sidebar_blocks = []
+for i in range(len(Block_class)):
+    new_block_y = 50 * i
+    sidebar_blocks.append(eval("block.{}(scroll_frame,(8,{}))".format(Block_class[i],new_block_y)))
 
-forloop_block = block.Forloop(scroll_frame,(8,50))
-forloop_block.canvas.bind("<Button-1>", add_forloop)
-
-forloopslut_block = block.Forloopslut(scroll_frame,(8,100))
-forloopslut_block.canvas.bind("<Button-1>", add_forloopslut)
-
-lavvar_block = block.Lav_var(scroll_frame,(8,150))
-lavvar_block.canvas.bind("<Button-1>", add_lavvar)
-
-sætvar_block = block.Sæt_var(scroll_frame,(8,200))
-sætvar_block.canvas.bind("<Button-1>", add_sætvar)
+sidebar_blocks[0].canvas.bind("<Button-1>", lambda event: add_block(event,Block_class[0]))
+sidebar_blocks[1].canvas.bind("<Button-1>", lambda event: add_block(event,Block_class[1]))
+sidebar_blocks[2].canvas.bind("<Button-1>", lambda event: add_block(event,Block_class[2]))
+sidebar_blocks[3].canvas.bind("<Button-1>", lambda event: add_block(event,Block_class[3]))
+sidebar_blocks[4].canvas.bind("<Button-1>", lambda event: add_block(event,Block_class[4]))
 
 start_block = block.Start(root)
 
